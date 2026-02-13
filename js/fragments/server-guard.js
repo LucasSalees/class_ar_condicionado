@@ -1,25 +1,31 @@
-// js/server-guard.js
 (function() {
     const BACKEND_URL = "https://project-air-conditioning.onrender.com";
     
-    // Lista de páginas que NÃO precisam de conexão ativa imediata (se houver)
-    const bypassPages = ['loading.html'];
-    const currentPage = window.location.pathname.split("/").pop();
+    // Pega o caminho completo para não se perder em "Pretty URLs" do Netlify
+    const path = window.location.pathname;
 
-    if (bypassPages.includes(currentPage)) return;
+    // Se já estiver na loading.html, não faz nada
+    if (path.includes("loading.html")) return;
 
     async function checkConnection() {
         try {
-            const res = await fetch(`${BACKEND_URL}/login/health`);
+            // Adicionamos um timeout curto para o Netlify não ficar esperando para sempre
+            const controller = new AbortController();
+            const id = setTimeout(() => controller.abort(), 4000);
+
+            const res = await fetch(`${BACKEND_URL}/login/health`, { 
+                signal: controller.signal,
+                mode: 'cors' // Força o modo CORS
+            });
+            clearTimeout(id);
+
             if (!res.ok) throw new Error();
         } catch (e) {
-            // Se o servidor não responder, envia para a página de loading
-            // passando a página atual como parâmetro 'from'
-            const from = window.location.pathname;
-            window.location.href = `/pages/loading.html?from=${from}`;
+            console.log("Servidor Render offline. Redirecionando para loading...");
+            // Usamos o caminho absoluto para o Netlify encontrar o arquivo
+            window.location.href = "/pages/loading.html?from=" + encodeURIComponent(path);
         }
     }
 
-    // Executa a checagem
     checkConnection();
 })();
