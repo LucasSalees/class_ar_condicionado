@@ -1,17 +1,24 @@
-<nav class="navbar navbar-expand-lg navbar-dark sticky-top glass-nav">
+<nav class="navbar navbar-expand-lg navbar-dark navbar-top fixed-top">
     <div class="container">
-        <a class="navbar-brand d-flex align-items-center" href="/">
-            <img src="/img/class.jpeg" alt="Logo Class" width="70" height="70" class="rounded-square border-gold object-fit-cover rounded-2">
-            <!-- <h2 class="logo-text mt-3 mb-0">CLASS <span class="text-gold">AR</span></h2> -->
-        </a>
+        <div class="navbar-content">
+            <img src="/img/class.jpeg" alt="Logo" class="navbar-logo">
+            <span class="navbar-brand-text">CLASS AR</span>
+        </div>
+        
         <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
             <span class="fas fa-bars text-gold fs-3"></span>
         </button>
+
         <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ms-auto text-uppercase fw-bold mt-3 mt-lg-0">
-                <li class="nav-item"><a class="nav-link" href="/index.html#home">Início</a></li>
-                <li class="nav-item"><a class="nav-link" href="/index.html#servicos">Soluções</a></li>
-                <li class="nav-item"><a class="nav-link" href="/pages/login.html"></i> Área Restrita</a></li>
+            <ul class="navbar-nav ms-auto text-uppercase fw-bold mt-3 mt-lg-0 align-items-center">
+                <li class="nav-item"><a class="nav-link" href="/index.html">Início</a></li>
+                <li class="nav-item"><a class="nav-link" href="/pages/login.html">Área Restrita</a></li>
+                <li class="nav-item ms-lg-3">
+                    <div id="api-status-badge" class="api-badge connecting" title="Verificando Conexão...">
+                        <span class="status-dot"></span>
+                        <span id="api-status-text" class="status-label">API: VERIFICANDO...</span>
+                    </div>
+                </li>
             </ul>
         </div>
     </div>

@@ -1,27 +1,22 @@
-footer {
-    flex-shrink: 0; /* Impede que o footer seja esmagado pelo conteúdo */
-    background-color: black;
-    border-top: 1px solid var(--gold);
-    padding: 2rem 0;
-    width: 100%;
+.footer-bottom {
+    background-color: #050505;
+    border-top: 1px solid rgba(212, 175, 55, 0.2);
+    margin-top: 50px; /* Garante que ele não cole na última seção */
 }
 
 .social-link-gold {
     color: var(--gold);
-    font-size: 2.2rem;
-    transition: 0.3s;
+    text-decoration: none;
+    transition: transform 0.3s ease, color 0.3s ease;
     display: inline-block;
 }
 
 .social-link-gold:hover {
     color: white;
-    transform: scale(1.1);
+    transform: translateY(-3px);
 }
 
-.btn-whatsapp-neon {
-    position: fixed; bottom: 30px; right: 30px;
-    width: 60px; height: 60px;
-    background: #25d366; color: white !important;
-    border-radius: 50%; display: flex; align-items: center; justify-content: center;
-    font-size: 30px; z-index: 9999; box-shadow: 0 0 20px rgba(37, 211, 102, 0.5);
+.extra-small {
+    font-size: 0.7rem;
+    letter-spacing: 1px;
 }
