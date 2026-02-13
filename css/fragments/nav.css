@@ -71,12 +71,6 @@ body {
 
 /* Estado Neutro / Conectando */
 
-.api-badge.connecting {
-    background:  #00d4ff;
-    box-shadow: 0 0 8px  #00d4ff;
-    animation: pulse-blue 2s infinite;
-}
-
 .api-badge.connecting .status-dot {
     background-color: #00d4ff;
     box-shadow: 0 0 5px #00d4ff;
