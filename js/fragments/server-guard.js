@@ -71,7 +71,11 @@
             const data = await res.text();
 
             if (res.ok && data.trim() === "CLASS_AR_SYSTEM_READY") {
-                systemStatus = { state: 'online', label: 'online', active: true };
+                systemStatus = { 
+                    state: 'online', 
+                    label: 'ONLINE', 
+                    active: true 
+                };
             } else {
                 throw new Error();
             }
@@ -87,7 +91,7 @@
                 // Se deu erro de conexão (deploy em curso ou servidor fora)
                 systemStatus = {
                     state: 'offline',
-                    label: 'SISTEMA EM MANUTENÇÃO',
+                    label: 'OFFLINE',
                     active: false
                 };
             }
