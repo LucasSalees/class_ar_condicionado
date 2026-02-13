@@ -21,12 +21,12 @@ async function callAPI(endpoint, method = 'GET', data = null) {
     }
 
     try {
-        const response = await fetch(`${BASE_URL}${endpoint}`, config);
+        const response = await fetch(`${window.BACKEND_URL}${endpoint}`, config);
 
         if (response.status === 403 || response.status === 401) {
-            // Se o token expirou ou é inválido, desloga
             localStorage.removeItem('token');
-            window.location.href = '/login.html';
+            // Garantindo que volte para a página de login absoluta
+            window.location.href = '/pages/login.html';
             return;
         }
 

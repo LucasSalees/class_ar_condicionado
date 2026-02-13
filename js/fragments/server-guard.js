@@ -1,9 +1,8 @@
-// js/fragments/server-guard.js
-(function() {
-    const BACKEND_URL = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1"
-        ? "http://localhost:8080"
-        : "https://project-air-conditioning.onrender.com";
+window.BACKEND_URL = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1"
+    ? "http://localhost:8080"
+    : "https://project-air-conditioning.onrender.com";
 
+(function() {
     const path = window.location.pathname;
     if (path.includes("loading.html")) return;
 

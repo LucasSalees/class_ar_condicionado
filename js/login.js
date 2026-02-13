@@ -11,8 +11,8 @@ async function handleLogin(event) {
         password: document.getElementById('senha').value
     };
 
-    try {
-        const response = await fetch(`${BACKEND_URL}/login`, {
+    try { 
+        const response = await fetch(`${window.BACKEND_URL}/login`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(payload)
@@ -22,8 +22,10 @@ async function handleLogin(event) {
             const data = await response.json();
             localStorage.setItem('token', data.token);
             
-            // Lógica de primeiro acesso que você fez no Java
-            window.location.href = data.primeiroAcesso ? 'pages/reset-password.html' : 'pages/dashboard.html';
+            // Usamos caminhos absolutos com '/' para o Netlify
+            window.location.href = data.primeiroAcesso 
+                ? '/pages/reset-password.html' 
+                : '/pages/dashboard.html';
         } else {
             alert("Usuário ou senha incorretos.");
             btn.disabled = false;
@@ -31,6 +33,8 @@ async function handleLogin(event) {
         }
     } catch (error) {
         // Caso o servidor caia exatamente no momento do clique
-        window.location.href = "/loading.html?from=login.html";
+        window.location.href = "/pages/loading.html?from=/pages/login.html";
     }
 }
+
+document.getElementById('loginForm')?.addEventListener('submit', handleLogin);
