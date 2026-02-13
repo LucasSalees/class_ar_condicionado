@@ -70,16 +70,11 @@ body {
 }
 
 /* Estado Neutro / Conectando */
-.api-badge.connecting {
-    border: 1px solid #00d4ff;
-    color: #00d4ff;
-    animation: glow-blue 2s infinite;
-}
 
 .api-badge.connecting {
-    border: 1px solid #00d4ff;
-    color: #00d4ff;
-    animation: glow-blue 2s infinite;
+    background:  #00d4ff;
+    box-shadow: 0 0 8px  #00d4ff;
+    animation: pulse-blue 2s infinite;
 }
 
 .api-badge.connecting .status-dot {
@@ -88,7 +83,7 @@ body {
     animation: glow-blue 2s infinite;
 }
 
-@keyframes glow-blue {
+@keyframes pulse-blue {
     0% { box-shadow: 0 0 5px rgba(0, 212, 255, 0.2); }
     50% { box-shadow: 0 0 15px rgba(0, 212, 255, 0.6); }
     100% { box-shadow: 0 0 5px rgba(0, 212, 255, 0.2); }
