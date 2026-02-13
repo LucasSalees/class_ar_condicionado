@@ -1,18 +1,14 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Class Ar - Conectando ao Servidor</title>
 
-    <link
-        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Syncopate:wght@400;700&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Syncopate:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="../css/global.css">
-    <link rel="stylesheet" href="../css/loading.css">
-
+    <link rel="stylesheet" href="/css/global.css">
+    <link rel="stylesheet" href="/css/loading.css">
 </head>
 
 <body class="d-flex align-items-center justify-content-center">
@@ -26,47 +22,65 @@
 
         <p class="text-white-50 small mb-4">
             Estamos acordando o servidor no Render.<br>
-            Isso acontece após alguns minutos de inatividade e pode levar até 60 segundos.
+            Isso ocorre após inatividade e pode levar até 60 segundos durante o deploy.
         </p>
 
         <div class="progress-micro">
             <div class="progress-bar progress-bar-striped progress-bar-animated w-100"></div>
         </div>
 
-        <p id="timer" class="mt-3 text-gold opacity-50 small">Tentando conexão...</p>
+        <p id="timer" class="mt-3 text-gold opacity-50 small">Sincronizando ambiente...</p>
     </div>
 
     <script>
-        // Script dentro de pages/loading.html
-        const BACKEND_URL = "https://project-air-conditioning.onrender.com";
+        // Detecção dinâmica de ambiente (Localhost vs Render)
+        const BACKEND_URL = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1"
+            ? "http://localhost:8080"
+            : "https://project-air-conditioning.onrender.com";
+
         let attempts = 0;
 
         async function poll() {
             attempts++;
-            document.getElementById('timer').innerText = `Tentativa ${attempts}...`;
+            const timerEl = document.getElementById('timer');
+            timerEl.innerText = `Tentativa de conexão ${attempts}...`;
 
             try {
-                const res = await fetch(`${BACKEND_URL}/login/health`);
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 5000); // Timeout de 5s por tentativa
 
-                if (res.ok) {
-                    document.getElementById('timer').innerText = "Sistema estável! Redirecionando...";
+                const res = await fetch(`${BACKEND_URL}/login/health`, { 
+                    signal: controller.signal,
+                    mode: 'cors'
+                });
+                
+                clearTimeout(timeoutId);
 
-                    // Aguarda 2 segundos extras para garantir que o tráfego foi estabilizado no Render
+                // Lemos o texto da resposta para garantir que o Spring subiu 100%
+                const statusText = await res.text();
+
+                if (res.ok && statusText.includes("CLASS_AR_SYSTEM_READY")) {
+                    timerEl.innerText = "Sistema estável! Preparando interface...";
+                    timerEl.classList.add('text-success', 'opacity-100');
+
+                    // Aguarda 2 segundos extras para garantir que o tráfego estabilizou no Render
                     setTimeout(() => {
                         const params = new URLSearchParams(window.location.search);
+                        // Redireciona para o destino original ou para o login absoluto
                         const destination = params.get('from') || '/pages/login.html';
                         window.location.href = destination;
                     }, 2000);
 
                 } else {
-                    throw new Error();
+                    throw new Error("Sistema em inicialização...");
                 }
             } catch (e) {
-                setTimeout(poll, 3000); // Tenta novamente em 3 segundos
+                // Tenta novamente em 3 segundos se falhar
+                setTimeout(poll, 3000);
             }
         }
+
         window.onload = poll;
     </script>
 </body>
-
 </html>
