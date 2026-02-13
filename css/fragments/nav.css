@@ -71,19 +71,30 @@ body {
 
 /* Estado Neutro / Conectando */
 .api-badge.connecting {
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid #00d4ff;
+    color: #00d4ff;
+    animation: glow-blue 2s infinite;
+}
+
+.api-badge.connecting {
+    border: 1px solid #00d4ff;
+    color: #00d4ff;
+    animation: glow-blue 2s infinite;
 }
 
 .api-badge.connecting .status-dot {
-    background-color: #888; /* Cinza */
-    box-shadow: 0 0 5px #888;
-    animation: pulse-gray 1.5s infinite;
+    background-color: #00d4ff;
+    box-shadow: 0 0 5px #00d4ff;
+    animation: glow-blue 2s infinite;
 }
 
-@keyframes pulse-gray {
-    0% { opacity: 1; }
-    50% { opacity: 0.4; }
-    100% { opacity: 1; }
+@keyframes glow-blue {
+    0% { box-shadow: 0 0 5px rgba(0, 212, 255, 0.2); }
+    50% { box-shadow: 0 0 15px rgba(0, 212, 255, 0.6); }
+    100% { box-shadow: 0 0 5px rgba(0, 212, 255, 0.2); }
 }
-/* ... resto dos estilos do badge (offline/online) ... */
+
+.spinner-border {
+    width: 1rem;
+    height: 1rem;
+}

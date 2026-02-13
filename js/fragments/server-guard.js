@@ -39,50 +39,64 @@
         inputs.forEach(el => {
             el.disabled = isLocked;
 
+            // Dentro do inputs.forEach no refreshUI:
             if (el.tagName === "BUTTON") {
-                if (systemStatus.state === 'offline') {
-                    el.innerText = "SISTEMA OFFLINE";
-                    el.className = "btn btn-danger w-100 py-2 rounded-0 fw-bold"; // Muda para vermelho
-                } else if (systemStatus.state === 'connecting') {
-                    el.innerText = "VERIFICANDO...";
-                    el.className = "btn btn-secondary w-100 py-2 rounded-0 fw-bold"; // Cinza
+                if (systemStatus.state === 'connecting') {
+                    el.innerHTML = `<span class="spinner-border spinner-border-sm me-2"></span> CONECTANDO...`;
+                    el.className = "btn btn-secondary w-100 py-2 rounded-0 fw-bold disabled";
+                } else if (systemStatus.state === 'offline') {
+                    el.innerText = "SISTEMA INDISPONÍVEL";
+                    el.className = "btn btn-danger w-100 py-2 rounded-0 fw-bold disabled";
                 } else {
                     el.innerText = "ENTRAR";
-                    el.className = "btn btn-outline-gold w-100 py-2 rounded-0 fw-bold"; // Dourado original
+                    el.className = "btn btn-outline-gold w-100 py-2 rounded-0 fw-bold";
                 }
             }
         });
     }
 
     async function checkSystem() {
+        // Criamos um controlador para cancelar a requisição se demorar muito (Timeout)
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 8000); // 8 segundos de limite
+
         try {
             const res = await fetch(`${BACKEND_URL}/login/health`, {
                 mode: 'cors',
-                cache: 'no-store'
+                cache: 'no-store',
+                signal: controller.signal
             });
 
+            clearTimeout(timeoutId);
             const data = await res.text();
 
             if (res.ok && data.trim() === "CLASS_AR_SYSTEM_READY") {
-                systemStatus = {
-                    state: 'online',
-                    label: 'online',
-                    active: true
-                };
+                systemStatus = { state: 'online', label: 'online', active: true };
             } else {
                 throw new Error();
             }
-        } catch {
-            systemStatus = {
-                state: 'offline',
-                label: 'offline',
-                active: false
-            };
+        } catch (err) {
+            if (err.name === 'AbortError') {
+                // Se deu timeout, provavelmente o Render está "acordando" o servidor
+                systemStatus = {
+                    state: 'connecting',
+                    label: 'INICIALIZANDO SERVIDOR...',
+                    active: false
+                };
+            } else {
+                // Se deu erro de conexão (deploy em curso ou servidor fora)
+                systemStatus = {
+                    state: 'offline',
+                    label: 'SISTEMA EM MANUTENÇÃO',
+                    active: false
+                };
+            }
         } finally {
-            // 💾 Salva estado para próximas páginas
             sessionStorage.setItem(SESSION_KEY, JSON.stringify(systemStatus));
             refreshUI();
-            setTimeout(checkSystem, 1000);
+            // Se estiver inicializando, tenta de novo mais rápido (5s), senão, aguarda 30s
+            const nextCheck = systemStatus.state === 'online' ? 30000 : 5000;
+            setTimeout(checkSystem, nextCheck);
         }
     }
 
