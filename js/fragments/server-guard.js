@@ -1,25 +1,35 @@
-window.BACKEND_URL = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1"
-    ? "http://localhost:8080"
-    : "https://project-air-conditioning.onrender.com";
-
 (function() {
-    const path = window.location.pathname;
-    if (path.includes("loading.html")) return;
-
-    async function checkConnection() {
+    const isLocal = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1";
+    const BACKEND_URL = isLocal ? "http://localhost:8080" : "https://project-air-conditioning.onrender.com";
+    
+    async function checkSystemIntegrity() {
         try {
-            const res = await fetch(`${BACKEND_URL}/login/health`);
-            
-            if (res.ok) {
-                // Em vez de mudar o 'display', adicionamos a classe que criamos no CSS
-                document.body.classList.add('ready');
-                console.log("Class Ar: Sistema validado e visível.");
+            // Timeout curto: se não responder em 4s, o sistema é considerado instável
+            const controller = new AbortController();
+            const id = setTimeout(() => controller.abort(), 4000);
+
+            const res = await fetch(`${BACKEND_URL}/login/health`, { 
+                signal: controller.signal,
+                mode: 'cors'
+            });
+            clearTimeout(id);
+
+            const statusText = await res.text();
+
+            // SÓ LIBERA SE O BACKEND RESPONDER A STRING DE SUCESSO
+            if (res.ok && statusText.includes("CLASS_AR_SYSTEM_READY")) {
+                console.log("Class Ar: Backend validado. Liberando acesso.");
+                // Remove o bloqueio de display do CSS
+                document.body.setAttribute('style', 'display: block !important; opacity: 1;');
             } else {
-                throw new Error();
+                throw new Error("Sistema inconsistente");
             }
         } catch (e) {
-            window.location.href = "/pages/loading.html?from=" + encodeURIComponent(path);
+            console.error("Falha Crítica no Backend. Redirecionando...");
+            // Se falhar, o usuário nunca vê a tela de login e volta para o loading
+            window.location.href = "/pages/loading.html?from=" + encodeURIComponent(window.location.pathname);
         }
     }
-    checkConnection();
+
+    checkSystemIntegrity();
 })();
