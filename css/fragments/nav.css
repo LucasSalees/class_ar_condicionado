@@ -1,0 +1,31 @@
+.glass-nav {
+    background: rgba(0, 0, 0, 0.9);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+    z-index: 1030;
+    width: 100%;
+}
+
+/* Garante que os links tenham contraste e o hover dourado */
+.nav-link {
+    color: white !important;
+    transition: 0.3s;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+}
+
+.nav-link:hover {
+    color: var(--gold) !important;
+}
+
+.border-gold {
+    border: 1px solid var(--gold) !important;
+}
+
+/* Tipografia */
+.logo-text {
+    font-family: 'Syncopate', sans-serif;
+    letter-spacing: 1px;
+    font-weight: 700;
+}

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Class Ar - Acesso Administrativo</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&family=Syncopate:wght@400;700&display=swap" rel="stylesheet">
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/fragments/nav.css">
+    <link rel="stylesheet" href="../css/fragments/footer.css">
+    <link rel="stylesheet" href="../css/login.css">
+</head>
+<body>
+
+    <div id="nav-placeholder"></div>
+
+    <main class="system-body d-flex align-items-center justify-content-center py-5">
+        <div class="login-card">
+            <div class="text-center mb-5">
+                <img src="/img/class.jpeg" alt="Logo Class" width="100" height="100" class="rounded-square border-gold object-fit-cover rounded-2">
+              <!-- <h2 class="logo-text mt-3 mb-0">CLASS <span class="text-gold">AR</span></h2> -->
+                <p class="brand-text text-white-50 small mt-3 mb-0">ÁREA RESTRITA</p>
+            </div>
+
+            <form id="loginForm">
+                <div class="mb-3">
+                    <label class="form-label small text-gold fw-bold">USUÁRIO</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-person-fill"></i></span>
+                        <input type="text" id="usuario" class="form-control" placeholder="Admin" required>
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <label class="form-label small text-gold fw-bold">SENHA</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-shield-lock-fill"></i></span>
+                        <input type="password" id="senha" class="form-control" placeholder="••••••••" required>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-login-cyber w-100 mb-3">
+                    ENTRAR
+                </button>
+            </form>
+
+            <div id="loginAlert" class="alert alert-danger d-none bg-dark text-danger border-danger small text-center p-2">
+                Acesso negado: Credenciais inválidas.
+            </div>
+        </div>
+    </main>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/fragments/server-guard.js"></script>
+    <script src="../js/login.js"></script>
+    <script src="../js/fragments/load-fragments.js"></script>
+    
+</body>
+</html>

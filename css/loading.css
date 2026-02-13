@@ -1,0 +1,28 @@
+.loader-content {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--gold);
+    box-shadow: 0 0 20px var(--gold-glow);
+    border-radius: var(--radius);
+    padding: 3rem;
+    max-width: 450px;
+    width: 90%;
+    backdrop-filter: blur(10px);
+}
+
+.spinner-gold {
+    width: 4rem;
+    height: 4rem;
+    color: var(--gold) !important;
+}
+
+.progress-micro {
+    height: 4px;
+    background-color: rgba(212, 175, 55, 0.1);
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.progress-micro .progress-bar {
+    background-color: var(--gold);
+    box-shadow: 0 0 10px var(--gold);
+}

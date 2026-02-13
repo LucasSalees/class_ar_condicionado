@@ -1,0 +1,56 @@
+.login-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(212, 175, 55, 0.3);
+    border-radius: var(--radius);
+    padding: 2.5rem;
+    width: 100%;
+    max-width: 400px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.login-card:hover {
+    border-color: var(--gold);
+    box-shadow: 0 0 30px var(--gold-glow);
+}
+
+/* Customização dos Inputs para o Tema Dark */
+.login-card .form-control {
+    background-color: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: white;
+}
+
+.login-card .form-control:focus {
+    background-color: rgba(255, 255, 255, 0.08);
+    border-color: var(--gold);
+    box-shadow: 0 0 8px var(--gold-glow);
+    color: white;
+}
+
+.login-card .input-group-text {
+    background-color: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--gold);
+}
+
+/* Botão de Login estilo Cyber */
+.btn-login-cyber {
+    background: transparent;
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    padding: 12px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    transition: 0.4s;
+    border-radius: 8px;
+}
+
+.btn-login-cyber:hover {
+    background: var(--gold);
+    color: var(--black-tech);
+    box-shadow: 0 0 20px var(--gold);
+    transform: translateY(-2px);
+}

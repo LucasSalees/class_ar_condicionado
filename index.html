@@ -4,36 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Class Ar e Automação | High Tech Climatização</title>
+    
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&family=Syncopate:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="style.css">
+    
+    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/fragments/nav.css">
+    <link rel="stylesheet" href="css/fragments/footer.css"> 
 </head>
+
 <body class="bg-black text-white">
 
-    <nav class="navbar navbar-expand-lg navbar-dark sticky-top glass-nav">
-        <div class="container">
-            <a class="navbar-brand d-flex align-items-center" href="#">
-                <img src="img/class.jpeg" alt="Logo Class" width="45" height="45" class="rounded-circle border-gold object-fit-cover">
-                <span class="ms-2 logo-text">CLASS <span class="text-gold">AR</span></span>
-            </a>
-            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="fas fa-bars text-gold fs-3"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto text-uppercase fw-bold mt-3 mt-lg-0">
-                    <li class="nav-item"><a class="nav-link text-white" href="#home">Início</a></li>
-                    <li class="nav-item"><a class="nav-link text-white" href="#sobre">Nossa Tech</a></li>
-                    <li class="nav-item"><a class="nav-link text-white" href="#galeria">Galeria</a></li>
-                    <li class="nav-item">
-                        <a  class="nav-link text-white" href="https://wa.me/5511944760182?text=Olá,%20equipe%20da%20Class%20Ar!%20Vi%20o%20portfólio%20de%20vocês%20no%20site%20e%20gostaria%20de%20agendar%20uma%20avaliação%20técnica%20para%20um%20orçamento." target="_blank">
-                            Orçamento <i class="fab fa-whatsapp"></i>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+    <div id="nav-placeholder"></div>
 
     <header id="home" class="hero-section d-flex align-items-center">
         <div class="container text-center">
@@ -251,16 +234,12 @@
         <i class="fab fa-whatsapp"></i>
     </a>
 
-    <footer class="py-5 text-center bg-black border-top border-gold">
-        <div class="container">
-            <div class="mb-4">
-                <a href="https://www.instagram.com/classareautomacao" target="_blank" class="social-link-gold mx-3"><i class="fab fa-instagram"></i></a>
-            </div>
-            <p class="text-secondary small mb-0">© 2026 CLASS AR E AUTOMAÇÃO | TECNOLOGIA EM CLIMATIZAÇÃO</p>
-        </div>
-    </footer>
+    <div id="footer-placeholder"></div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script src="js/fragments/load-fragments.js"></script>
+
     <script>
         const imageModal = document.getElementById('imageModal');
         const modalImg = document.getElementById('modalImg');
@@ -273,5 +252,6 @@
             }
         });
     </script>
+
 </body>
 </html>
