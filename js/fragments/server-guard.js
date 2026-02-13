@@ -1,4 +1,3 @@
-// js/server-guard.js
 (function() {
     const BACKEND_URL = "https://project-air-conditioning.onrender.com";
     const path = window.location.pathname;
@@ -7,21 +6,25 @@
 
     async function checkConnection() {
         try {
+            // Se demorar mais de 3 segundos, assumimos que está "acordando" e redirecionamos
             const controller = new AbortController();
-            // Aumentamos o tempo para o Render responder sem pressa
-            const timeoutId = setTimeout(() => controller.abort(), 10000); 
+            const id = setTimeout(() => controller.abort(), 3000);
 
             const res = await fetch(`${BACKEND_URL}/login/health`, { 
                 signal: controller.signal,
                 mode: 'cors' 
             });
-            clearTimeout(timeoutId);
+            clearTimeout(id);
 
-            if (!res.ok) throw new Error();
+            // Se o status não for 200 (OK), algo está errado (deploy ou cold start)
+            if (!res.ok) throw new Error("Servidor instável");
+            
         } catch (e) {
-            // Se falhar, redireciona apenas se não houver conexão real
+            console.error("Guarda Class Ar: Servidor offline ou em deploy. Redirecionando...");
+            // Use o caminho absoluto para o loading
             window.location.href = "/pages/loading.html?from=" + encodeURIComponent(path);
         }
     }
+
     checkConnection();
 })();
